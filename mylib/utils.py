@@ -30,4 +30,10 @@ def letterbox(
     return letterbox_image
 
 
-# def draw_bbox()
+def draw_bbox(out_tensor, image): 
+    center_x, center_y, width, height, angle, confidence, obj_class = out_tensor
+    angle = np.degrees(angle)
+    rect = ((center_x, center_y), (width, height), angle)
+    box = cv2.boxPoints(rect)
+    box = np.int0(box) 
+    cv2.drawContours(image, [box], 0, (0, 255, 0), 2)
