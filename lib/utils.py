@@ -1,14 +1,14 @@
 import cv2 
 import math
 import numpy as np
-
+from typing import Union 
 
 def letterbox(
-        image, 
-        target_width=1024, 
-        target_height=1024, 
-        color=(128, 128, 128)
-    ):
+        image : np.ndarray, 
+        target_width : int = 1024, 
+        target_height : int = 1024, 
+        color : tuple = (128, 128, 128)
+    ) -> np.ndarray:
     original_height, original_width = image.shape[:2]
     
     # Calculate the new dimensions preserving the aspect ratio
@@ -32,13 +32,18 @@ def letterbox(
     return letterbox_image
 
 
-def draw_bbox(out_tensor, image): 
+def draw_bbox(
+        out_tensor : Union[list, np.ndarray], 
+        image : np.ndarray, 
+        line_thick : int = 1, 
+        line_color : tuple = (0,255,0)
+    ) -> np.ndarray: 
     center_x, center_y, width, height, angle = out_tensor
     angle = np.degrees(angle)
     rect = ((center_x, center_y), (width, height), angle)
     box = cv2.boxPoints(rect)
     box = np.intp(box) 
-    drawed = cv2.drawContours(image, [box], 0, (0, 255, 0), 2)
+    drawed = cv2.drawContours(image, [box], 0, line_color, line_thick)
     return drawed
 
 def clip_boxes(boxes, shape):
