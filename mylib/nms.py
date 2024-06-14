@@ -23,9 +23,11 @@ def batch_probiou(obb1, obb2, eps=1e-7):
     a1, b1, c1 = _get_covariance_matrix(obb1)
     a2, b2, c2 = _get_covariance_matrix(obb2)
 
-    t1 = (((a1 + a2) * (y1 - y2)**2 + (b1 + b2) * (x1 - x2)**2) / ((a1 + a2) * (b1 + b2) - (c1 + c2)**2 + eps)) * 0.25
-    t2 = (((c1 + c2) * (x2 - x1) * (y1 - y2)) / ((a1 + a2) * (b1 + b2) - (c1 + c2)**2 + eps)) * 0.5
-    t3 = np.log(((a1 + a2) * (b1 + b2) - (c1 + c2)**2) / (4 * np.sqrt((np.maximum(a1 * b1 - c1**2, 0)) * (np.maximum(a2 * b2 - c2**2, 0))) + eps) + eps) * 0.5
+
+    t1 = (((a1 + a2.T) * (y1 - y2.T)**2 + (b1 + b2.T) * (x1 - x2.T)**2) / ((a1 + a2.T) * (b1 + b2.T) - (c1 + c2.T)**2 + eps)) * 0.25
+    t2 = (((c1 + c2.T) * (x2.T - x1) * (y1 - y2.T)) / ((a1 + a2.T) * (b1.T + b2) - (c1 + c2.T)**2 + eps)) * 0.5
+    t3 = np.log(((a1.T + a2) * (b1.T + b2) - (c1 + c2.T)**2) 
+        / (4 * np.sqrt((np.maximum(a1 * b1 - c1**2, 0)) * (np.maximum(a2.T * b2.T - c2.T**2, 0))) + eps) + eps) * 0.5
     bd = np.clip(t1 + t2 + t3, eps, 100.0)
     hd = np.sqrt(1.0 - np.exp(-bd) + eps)
     return 1 - hd
@@ -133,7 +135,7 @@ def non_max_suppression(
 
         boxes = np.concatenate([x[:, :2] + c, x[:, 2:4], x[:, -1:]], axis=-1)  # xywhr
         i = nms_rotated(boxes, scores, iou_thres)
-    #     i = i[:max_det]  # limit detections
+        i = i[:max_det]  # limit detections
 
-    #     output[xi] = x[i]
-    # return output
+        output[xi] = x[i]
+    return output
