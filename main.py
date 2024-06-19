@@ -23,5 +23,3 @@ async def iference(image: UploadFile):
     output = obb(input_image)
 
     return output
-
-

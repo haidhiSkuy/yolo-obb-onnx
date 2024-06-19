@@ -1,0 +1,6 @@
+version: '1'
+services:
+  onnx-obb: 
+    build: .
+    ports:
+      - "8000:8000"
