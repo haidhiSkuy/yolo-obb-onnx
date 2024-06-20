@@ -1,7 +1,7 @@
 
 # Onnxruntime & FastAPI YOLO Oriented Box
 
-How to use
+How to use (don't forget to download the onnx model)
 
 ```console 
 user@ubuntu:~$ git clone git@github.com:widyamsib/widya-OBB.git 
