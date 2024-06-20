@@ -1,0 +1,5 @@
+opencv-python-headless
+onnxruntime 
+fastapi 
+pillow 
+numpy==1.26.4
