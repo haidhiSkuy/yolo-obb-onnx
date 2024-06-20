@@ -3,4 +3,4 @@ services:
   onnx-obb: 
     build: .
     ports:
-      - "8000:8000"
+      - "${LOCAL_PORT}:8000"
