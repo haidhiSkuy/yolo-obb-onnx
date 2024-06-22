@@ -17,7 +17,7 @@ headers = {'accept': 'application/json'}
 
 files = {'image': (image_path, open(image_path, 'rb'), 'image/jpeg')} 
     
-response = requests.post('http://0.0.0.0:8000/obb', headers=headers, files=files)
+response = requests.post('http://0.0.0.0:1234/obb', headers=headers, files=files)
 output = response.json()
 ````
 
